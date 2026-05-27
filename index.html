@@ -642,6 +642,30 @@
       .footer-box { border-right: none; border-bottom: 1px solid var(--line); }
       .footer-box.left { padding-left: 76px; }
     }
+    .intro-screen{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:300px;
+}
+
+.btn-entrar{
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(203,183,255,.38);
+  color: #e9e0f4;
+  padding: 18px 56px;
+  border-radius: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.btn-entrar:hover{
+  background: rgba(203,183,255,.10);
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(203,183,255,.10);
+}
   </style>
 </head>
 <body>
@@ -664,13 +688,19 @@
 
         <h1>para kiki,<br>em seu <em>caos</em> bonito.</h1>
         <p class="subtitle">um lugar só seu.</p>
-        <a class="btn" href="#entrada">entrar</a>
-        <p style="margin-top:18px;color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:18px">(clique para começar)</p>
+       
       </div>
     </header>
 
-    <section id="entrada">
-      <div class="password-box">
+<section id="entrada">
+
+  <div class="intro-screen" id="introScreen">
+    <button onclick="abrirEntrada()" class="btn-entrar">
+      entrar
+    </button>
+  </div>
+
+  <div class="password-box hidden" id="loginBox">
         <h2 class="title" style="margin-bottom:4px">para entrar...</h2>
         <p class="desc" style="margin-bottom:0">uma pequena senha.</p>
         <input id="senha" placeholder="digite a senha" />
@@ -857,13 +887,24 @@
 </footer>
 
   <script>
-    const senhaCorreta = "kiki"; // troque por algo mais pessoal de vocês
+  const senhaHashCorreta = "888da5db853449fff82b07cbdbf7c755ece0783aa670bb36cc5c4cc9a68fb864";
 
-    function verificarSenha() {
-      const senha = document.getElementById('senha').value.trim().toLowerCase();
-      const resposta = document.getElementById('resposta');
+async function gerarHash(texto) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(texto);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
 
-      if (senha === senhaCorreta) {
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(byte => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function verificarSenha() {
+  const senha = document.getElementById('senha').value.trim().toLowerCase();
+  const resposta = document.getElementById('resposta');
+  const senhaDigitadaHash = await gerarHash(senha);
+
+  if (senhaDigitadaHash === senhaHashCorreta) {
         resposta.textContent = "entrada liberada. bem-vinda ao seu pequeno universo.";
         document.querySelectorAll('.bloqueado').forEach(el => el.classList.remove('hidden'));
         setTimeout(() => document.getElementById('memorias').scrollIntoView({ behavior: 'smooth' }), 650);
@@ -937,7 +978,10 @@ if (footerMusic && playButton) {
     playButton.textContent = '▶';
   });
 }
-
+function abrirEntrada() {
+  document.getElementById('introScreen').classList.add('hidden');
+  document.getElementById('loginBox').classList.remove('hidden');
+}
     atualizarContador();
     setInterval(atualizarContador, 1000);
   </script>
