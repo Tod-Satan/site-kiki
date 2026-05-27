@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>para kiki</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #030306;
+      --panel: rgba(10, 8, 15, .76);
+      --panel2: rgba(18, 14, 25, .72);
+      --line: rgba(205, 190, 255, .18);
+      --line2: rgba(205, 190, 255, .35);
+      --text: #e6dfef;
+      --muted: #a49aaf;
+      --purple: #cbb7ff;
+      --purple2: #9c7cff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(139, 112, 190, .20), transparent 28%),
+        radial-gradient(circle at 82% 14%, rgba(108, 81, 155, .16), transparent 30%),
+        linear-gradient(180deg, #020204 0%, #07040b 52%, #030306 100%);
+      color: var(--text);
+      font-family: Inter, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.70) 1px, transparent 1.6px),
+        radial-gradient(circle, rgba(203,183,255,.45) 1px, transparent 1.6px);
+      background-size: 95px 95px, 155px 155px;
+      opacity: .15;
+      animation: stars 22s linear infinite;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px),
+                  linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+      opacity: .25;
+      z-index: 0;
+    }
+
+    @keyframes stars { from { transform: translateY(0); } to { transform: translateY(-95px); } }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, 96vw);
+      margin: 10px auto 40px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      box-shadow: 0 0 70px rgba(0,0,0,.55);
+    }
+
+    .hero {
+      min-height: 92vh;
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      padding: 44px 24px;
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.36)),
+        url('./img/entrada.png.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(190,170,255,.10), transparent 32%),
+        linear-gradient(90deg, rgba(0,0,0,.32), transparent 34%, transparent 66%, rgba(0,0,0,.25));
+      opacity: .9;
+    }
+
+    .tag, .date {
+      position: absolute;
+      top: 28px;
+      font-family: 'Cormorant Garamond', serif;
+      color: #d6cfe1;
+      letter-spacing: .05em;
+      font-size: 18px;
+      z-index: 3;
+    }
+
+    .tag { left: 32px; max-width: 270px; line-height: 1.25; }
+    .date { right: 32px; }
+
+    .hero-center {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: min(850px, 100%);
+      padding-top: 50px;
+    }
+
+    .count-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-style: italic;
+      color: var(--purple);
+      margin-bottom: 14px;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: clamp(14px, 4vw, 38px);
+      align-items: flex-start;
+      margin-bottom: 22px;
+      color: var(--purple);
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .time strong {
+      display: block;
+      font-size: clamp(38px, 7vw, 68px);
+      font-weight: 300;
+      line-height: 1;
+      text-shadow: 0 0 28px rgba(203,183,255,.18);
+    }
+
+    .time span {
+      display: block;
+      color: #d8d0e4;
+      font-size: 17px;
+      margin-top: 6px;
+    }
+
+    .count-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      color: #bdb4c8;
+      margin-bottom: 54px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(54px, 8vw, 104px);
+      font-weight: 300;
+      color: var(--purple);
+      line-height: .95;
+      letter-spacing: .01em;
+      text-shadow: 0 0 36px rgba(203,183,255,.20);
+    }
+
+    h1 em { color: #f1eaff; font-style: italic; }
+
+    .subtitle {
+      margin-top: 24px;
+      color: var(--muted);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 25px;
+    }
+
+    .btn {
+      margin-top: 34px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(203,183,255,.38);
+      color: #e9e0f4;
+      padding: 14px 48px;
+      border-radius: 8px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      cursor: pointer;
+      transition: .25s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: rgba(203,183,255,.10);
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(203,183,255,.10);
+    }
+
+    section {
+      padding: 60px 48px;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+      background: rgba(0,0,0,.18);
+    }
+
+    .section-bg {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .section-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.42);
+      pointer-events: none;
+    }
+
+    .section-bg > * { position: relative; z-index: 1; }
+
+    #entrada {
+      background-image: linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.52)), url('./img/poemas.png.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    #memorias {
+      background-image: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.72)), url('./img/memorias.png.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    #sobre {
+      background-image: linear-gradient(90deg, rgba(0,0,0,.74), rgba(0,0,0,.48)), url('./img/sobre.png.png');
+      background-size: cover;
+      background-position: center;
+      min-height: 430px;
+      display: grid;
+      align-content: center;
+    }
+
+    #musicas {
+      background-image: linear-gradient(90deg, rgba(0,0,0,.76), rgba(0,0,0,.50)), url('./img/musicas.png.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .title {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--purple);
+      font-weight: 300;
+      font-size: clamp(38px, 5vw, 54px);
+      margin-bottom: 8px;
+    }
+
+    .desc {
+      color: var(--muted);
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 36px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .card {
+      min-height: 220px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 30px 28px;
+      background: linear-gradient(180deg, rgba(23,18,32,.76), rgba(6,6,10,.72));
+      transition: .25s;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(3px);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      right: -30px; bottom: -30px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(203,183,255,.12), transparent 65%);
+    }
+
+    .card:hover { transform: translateY(-5px); border-color: var(--line2); }
+    .icon { font-size: 34px; color: var(--purple); margin-bottom: 22px; }
+    .card h3 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; margin-bottom: 14px; }
+    .card p { color: #b8afc4; line-height: 1.55; }
+
+    .password-box {
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 36px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(10, 8, 15, .72);
+      backdrop-filter: blur(4px);
+    }
+
+    input {
+      width: min(350px, 100%);
+      margin-top: 20px;
+      padding: 15px 18px;
+      border-radius: 8px;
+      border: 1px solid rgba(203,183,255,.25);
+      background: rgba(0,0,0,.35);
+      color: white;
+      outline: none;
+      font-family: Inter, sans-serif;
+    }
+
+    .msg {
+      margin-top: 16px;
+      color: var(--purple);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px;
+    }
+
+    .poem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background-image: linear-gradient(90deg, rgba(0,0,0,.74), rgba(0,0,0,.54)), url('./img/poemas.png.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .poem-card {
+      padding: 55px 44px;
+      min-height: 340px;
+      border-right: 1px solid var(--line);
+      background: rgba(0,0,0,.20);
+    }
+
+    .poem-card:last-child { border-right: none; }
+
+    .poem-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--purple);
+      font-weight: 300;
+      font-size: 38px;
+      margin-bottom: 22px;
+    }
+
+    .poem-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      line-height: 1.45;
+      color: #d7cfdf;
+      text-shadow: 0 2px 18px rgba(0,0,0,.55);
+    }
+
+    #poemaCompleto {
+      background: rgba(0,0,0,.28);
+      background-image: none;
+    }
+
+    .poem-complete {
+      max-width: 780px;
+      margin: 34px auto 0;
+      text-align: center;
+      display: none;
+    }
+
+    .poem-complete.show { display: block; }
+
+    .music-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .music {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px;
+      background: linear-gradient(180deg, rgba(18,14,25,.82), rgba(5,5,8,.76));
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      text-decoration: none;
+      color: var(--text);
+      transition: .25s;
+      backdrop-filter: blur(4px);
+    }
+
+    .music:hover { border-color: var(--line2); transform: translateY(-3px); }
+
+    .play {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(203,183,255,.45);
+      display: grid;
+      place-items: center;
+      color: var(--purple);
+      flex: 0 0 auto;
+    }
+
+    .music h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 27px;
+      margin-bottom: 4px;
+    }
+
+    .music p { color: var(--muted); font-size: 14px; margin-bottom: 12px; }
+
+    .local-music { align-items: flex-start; }
+    .local-music > div:last-child { width: 100%; }
+
+    audio {
+      width: 100%;
+      height: 38px;
+      filter: invert(92%) sepia(18%) saturate(600%) hue-rotate(210deg);
+      opacity: .82;
+    }
+
+    .playlist-links {
+      text-align: center;
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .small-link {
+      color: #d8ccff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 18px;
+      text-decoration: none;
+      font-size: 14px;
+      background: rgba(0,0,0,.45);
+      backdrop-filter: blur(4px);
+    }
+
+    .more-poems {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--line);
+      background: rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .more-poems::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url('./img/cidade.png');
+      background-size: 42%;
+      background-repeat: no-repeat;
+      background-position: right center;
+      opacity: .72;
+      pointer-events: none;
+    }
+
+    .more-poems::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url('./img/poemas.png.png');
+      background-size: 30%;
+      background-repeat: no-repeat;
+      background-position: left bottom;
+      opacity: .38;
+      pointer-events: none;
+    }
+
+    .mini-poem {
+      position: relative;
+      z-index: 1;
+      padding: 54px 48px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      line-height: 1.45;
+      color: #cbc3d7;
+      min-height: 330px;
+      display: grid;
+      place-items: center;
+      background: rgba(0,0,0,.28);
+    }
+
+    .mini-poem:last-child { border-right: none; }
+
+    footer {
+      color: var(--muted);
+      font-family: 'Cormorant Garamond', serif;
+      border-top: 1px solid var(--line);
+      background: rgba(0,0,0,.46);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      min-height: 105px;
+    }
+
+    .footer-box {
+      position: relative;
+      min-height: 105px;
+      padding: 26px 34px;
+      border-right: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .footer-box:last-child { 
+      border-right: none; 
+    }
+
+    .footer-box span {
+      font-size: 20px;
+      line-height: 1.5;
+    }
+
+    .footer-box.left {
+      justify-content: flex-start;
+      text-align: left;
+      padding-left: 86px;
+    }
+
+    .footer-box.left::before {
+      content: "✉";
+      position: absolute;
+      left: 34px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--purple);
+      font-size: 34px;
+      opacity: .82;
+      font-style: normal;
+      text-shadow: 0 0 12px rgba(203,183,255,.18);
+    }
+
+    .footer-box.music-mini {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: #d8ccff;
+      text-align: center;
+    }
+
+    .footer-box.music-mini span {
+      font-size: 20px;
+      line-height: 1.1;
+    }
+
+    .mini-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      font-size: 31px;
+      color: var(--purple);
+      font-style: normal;
+      line-height: 1;
+    }
+
+    .mini-controls .circle {
+      width: 56px;
+      height: 56px;
+      border: 1px solid rgba(203,183,255,.72);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      box-shadow: 0 0 18px rgba(203,183,255,.10);
+      transition: .25s;
+    }
+
+    .mini-controls .circle:hover {
+      transform: scale(1.06);
+      background: rgba(203,183,255,.08);
+      box-shadow: 0 0 24px rgba(203,183,255,.18);
+    }
+
+    .wave {
+      width: min(300px, 92%);
+      height: 28px;
+      opacity: .82;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent 0 5px,
+          rgba(203,183,255,.95) 5px 7px,
+          transparent 7px 11px
+        );
+      mask-image:
+        linear-gradient(to right, transparent, black 7%, black 93%, transparent),
+        radial-gradient(ellipse at center, black 38%, transparent 82%);
+      -webkit-mask-image:
+        linear-gradient(to right, transparent, black 7%, black 93%, transparent),
+        radial-gradient(ellipse at center, black 38%, transparent 82%);
+    }
+
+    .footer-box.right {
+      justify-content: center;
+      text-align: center;
+      padding-right: 90px;
+    }
+
+    .footer-box.right::after {
+      content: "⚘";
+      position: absolute;
+      right: 38px;
+      top: 50%;
+      transform: translateY(-50%) rotate(18deg);
+      color: var(--purple);
+      opacity: .78;
+      font-size: 38px;
+      font-style: normal;
+      text-shadow: 0 0 12px rgba(203,183,255,.16);
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 850px) {
+      .hero { background-position: center; }
+      footer { grid-template-columns: 1fr; }
+      .footer-box { border-right: none; border-bottom: 1px solid var(--line); }
+      .footer-box.left { padding-left: 76px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <div class="tag">para a garota que escreve<br>o que o mundo sente<br>mas não sabe dizer.</div>
+      <div class="date">29 • 05 • 2026</div>
+      <div class="moon"></div>
+      <div class="flowers"></div>
+
+      <div class="hero-center">
+        <div class="count-title">falta pouco...</div>
+        <div class="countdown" aria-label="contador para o aniversário">
+          <div class="time"><strong id="dias">--</strong><span>dias</span></div>
+          <div class="time"><strong id="horas">--</strong><span>horas</span></div>
+          <div class="time"><strong id="minutos">--</strong><span>minutos</span></div>
+          <div class="time"><strong id="segundos">--</strong><span>segundos</span></div>
+        </div>
+        <div class="count-sub">para o dia em que o mundo ganhou você.</div>
+
+        <h1>para kiki,<br>em seu <em>caos</em> bonito.</h1>
+        <p class="subtitle">um lugar só seu.</p>
+        <a class="btn" href="#entrada">entrar</a>
+        <p style="margin-top:18px;color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:18px">(clique para começar)</p>
+      </div>
+    </header>
+
+    <section id="entrada">
+      <div class="password-box">
+        <h2 class="title" style="margin-bottom:4px">para entrar...</h2>
+        <p class="desc" style="margin-bottom:0">uma pequena senha.</p>
+        <input id="senha" placeholder="digite a senha" />
+        <br>
+        <button class="btn" onclick="verificarSenha()">desbloquear</button>
+        <div id="resposta" class="msg"></div>
+      </div>
+    </section>
+
+    <section class="hidden bloqueado" id="memorias">
+      <h2 class="title">✦ memórias nossas ✦</h2>
+      <p class="desc">coisas que só nós entendemos.</p>
+
+      <div class="cards">
+        <a class="card" href="#musicas" style="text-decoration:none;color:inherit">
+          <div class="icon">♫</div>
+          <h3>nossas músicas</h3>
+          <p>trilhas de cada fase, de cada conversa, de cada caos.</p>
+        </a>
+
+        <a class="card" href="#sobre" style="text-decoration:none;color:inherit">
+          <div class="icon">♡</div>
+          <h3>sobre você</h3>
+          <p>coisas que admiro em você mesmo quando você não percebe.</p>
+        </a>
+
+        <a class="card" href="#poemas" style="text-decoration:none;color:inherit">
+          <div class="icon">☾</div>
+          <h3>poemas</h3>
+          <p>palavras que me lembram você.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="hidden bloqueado" id="sobre">
+      <h2 class="title">sobre você</h2>
+      <p class="poem-text" style="max-width:760px;margin:0 auto;text-align:center">
+        Você escreve como quem tenta impedir as próprias emoções de apodrecerem em silêncio.<br>
+        Tem gente que fala para ser ouvida. Você escreve para não sufocar.<br><br>
+        E talvez seja por isso que algumas palavras suas ficam na cabeça:
+        porque parecem feridas, mas também parecem estrelas.
+      </p>
+    </section>
+
+    <section class="hidden bloqueado" id="musicas">
+      <h2 class="title">uma música pra você</h2>
+      <p class="desc">aperte play quando a saudade bater.</p>
+
+      <div class="music-list">
+        <div class="music local-music">
+          <div class="play">♫</div>
+          <div>
+            <h3>k a m a i t a c h i - Tsar</h3>
+            <p>ouvir direto aqui</p>
+            <audio controls preload="metadata" src="./audio/k a m a i t a c h i - Tsar.mp3"></audio>
+          </div>
+        </div>
+
+        <div class="music local-music">
+          <div class="play">♫</div>
+          <div>
+            <h3>k a m a i t a c h i - Ragnarok</h3>
+            <p>ouvir direto aqui</p>
+            <audio controls preload="metadata" src="./audio/k a m a i t a c h i - Ragnarok.mp3"></audio>
+          </div>
+        </div>
+
+        <div class="music local-music">
+          <div class="play">♫</div>
+          <div>
+            <h3>kamaitachi - Cachecol</h3>
+            <p>ouvir direto aqui</p>
+            <audio controls preload="metadata" src="./audio/Cachecol.mp3"></audio>
+          </div>
+        </div>
+
+        <div class="music local-music">
+          <div class="play">♫</div>
+          <div>
+            <h3>Into The Otherside</h3>
+            <p>ouvir direto aqui</p>
+            <audio controls preload="metadata" src="./audio/Into The Otherside.mp3"></audio>
+          </div>
+        </div>
+      </div>
+
+      <div class="playlist-links">
+        <a class="small-link" target="_blank" href="https://www.last.fm/user/Somnophobiamp3/library">biblioteca Last.fm</a>
+        <a class="small-link" target="_blank" href="https://open.spotify.com/playlist/3w5b7j76NwKUEoO4QNZ2yO?si=kygirfBZS5uDyFznOTZKkw">playlist Spotify I</a>
+        <a class="small-link" target="_blank" href="https://open.spotify.com/playlist/7yStPaFWNu6XpCHC2XoKFl?si=lkgjFTPKTeOsxn_MAhy_Hg">playlist Spotify II</a>
+      </div>
+    </section>
+
+    <div class="poem-grid hidden bloqueado" id="poemas">
+      <div class="poem-card">
+        <h2>um poema pra você</h2>
+        <div class="poem-text">
+          você transforma dor em beleza,<br>
+          silêncio em poesia,<br>
+          e o caos que te habita<br>
+          em algo que nenhum mundo<br>
+          jamais conseguiria explicar.
+        </div>
+        <button class="btn" onclick="togglePoema()">ler poema completo</button>
+      </div>
+
+      <div class="poem-card">
+        <div class="poem-text">
+          “Vago é o jeito que eu disfarço teu nome na boca,<br>
+          inventando silêncios onde eu queria gritar você,<br>
+          todo dia engolindo o gosto do que nunca digo,<br>
+          ocultando teu rosto em cada pensamento que insiste,<br>
+          rasgando por dentro o que por fora eu finjo não sentir.”
+        </div>
+      </div>
+    </div>
+
+    <section class="hidden" id="poemaCompleto">
+      <h2 class="title">poema completo</h2>
+      <div class="poem-text" style="max-width:760px;margin:0 auto;text-align:center">
+        Você fala como quem aprendeu cedo<br>
+        que nem todo abraço fica,<br>
+        mas ainda assim guarda ternura<br>
+        em alguma parte escondida do peito.<br><br>
+
+        E talvez seja isso que te torna rara:<br>
+        não a ausência de feridas,<br>
+        mas esse jeito absurdo<br>
+        de ainda transformar ruína em linguagem.<br><br>
+
+        Você não precisa ser menos intensa<br>
+        para caber em algum lugar.<br>
+        Às vezes o mundo é que é pequeno demais<br>
+        para entender quem sente como tempestade.
+      </div>
+    </section>
+
+    <div class="more-poems hidden bloqueado">
+      <div class="mini-poem">
+        Sinto-me inteiro quando a tristeza vem,<br>
+        como se o mundo, enfim, me compreendesse.<br>
+        Ela não finge, não sorri por ninguém,<br>
+        é nua, crua, e só a mim pertence.<br><br>
+        No seu silêncio encontro repouso,<br>
+        no peso frio descubro calor.<br>
+        Pois só na dor é que sou verdadeiro,<br>
+        só na ferida reconheço amor.
+      </div>
+
+      <div class="mini-poem">
+        Sou carne vil em cárcere de ossos,<br>
+        um verme coroado por engano,<br>
+        escravo da lama que me veste,<br>
+        ferida aberta em forma de homem.<br><br>
+        Aqui, porém, apodreço desperto,<br>
+        meu sangue é vinho rancoroso,<br>
+        meus ossos, sinos rachados<br>
+        que ressoam a miséria do meu nome.
+      </div>
+    </div>
+
+   <footer class="hidden bloqueado">
+  <div class="footer-box left">
+    <span>se um dia o mundo parecer pesado demais...<br>volta aqui. esse lugar sempre será seu.</span>
+  </div>
+
+  <div class="footer-box music-mini">
+    <span>uma música pra você</span>
+
+    <audio id="footerMusic" src="./audio/PARASITA Delírio.mp3"></audio>
+
+    <div class="mini-controls">
+      <span onclick="retrocederMusica()">‹</span>
+      <span class="circle" onclick="toggleFooterMusic()" id="playButton">▶</span>
+      <span onclick="avancarMusica()">›</span>
+    </div>
+
+    <div class="wave"></div>
+  </div>
+
+  <div class="footer-box right">
+    <span>feito com tudo que não cabe em mim.</span>
+  </div>
+</footer>
+
+  <script>
+    const senhaCorreta = "kiki"; // troque por algo mais pessoal de vocês
+
+    function verificarSenha() {
+      const senha = document.getElementById('senha').value.trim().toLowerCase();
+      const resposta = document.getElementById('resposta');
+
+      if (senha === senhaCorreta) {
+        resposta.textContent = "entrada liberada. bem-vinda ao seu pequeno universo.";
+        document.querySelectorAll('.bloqueado').forEach(el => el.classList.remove('hidden'));
+        setTimeout(() => document.getElementById('memorias').scrollIntoView({ behavior: 'smooth' }), 650);
+      } else {
+        resposta.textContent = "senha errada... mas combina com você tentar quebrar a porta.";
+      }
+    }
+
+    function togglePoema() {
+      const poema = document.getElementById('poemaCompleto');
+      poema.classList.toggle('hidden');
+      if (!poema.classList.contains('hidden')) {
+        setTimeout(() => poema.scrollIntoView({ behavior: 'smooth' }), 150);
+      }
+    }
+
+    function atualizarContador() {
+      const alvo = new Date('2026-05-29T00:00:00');
+      const agora = new Date();
+      const diff = alvo - agora;
+
+      if (diff <= 0) {
+        document.querySelector('.count-title').textContent = 'hoje é o dia.';
+        document.getElementById('dias').textContent = '00';
+        document.getElementById('horas').textContent = '00';
+        document.getElementById('minutos').textContent = '00';
+        document.getElementById('segundos').textContent = '00';
+        return;
+      }
+
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diff / (1000 * 60)) % 60);
+      const segundos = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('dias').textContent = String(dias).padStart(2, '0');
+      document.getElementById('horas').textContent = String(horas).padStart(2, '0');
+      document.getElementById('minutos').textContent = String(minutos).padStart(2, '0');
+      document.getElementById('segundos').textContent = String(segundos).padStart(2, '0');
+    }
+const footerMusic = document.getElementById('footerMusic');
+const playButton = document.getElementById('playButton');
+
+function toggleFooterMusic() {
+  if (!footerMusic || !playButton) return;
+
+  if (footerMusic.paused) {
+    footerMusic.play();
+    playButton.textContent = '❚❚';
+  } else {
+    footerMusic.pause();
+    playButton.textContent = '▶';
+  }
+}
+
+function retrocederMusica() {
+  if (!footerMusic) return;
+  footerMusic.currentTime = Math.max(0, footerMusic.currentTime - 10);
+}
+
+function avancarMusica() {
+  if (!footerMusic) return;
+  footerMusic.currentTime = Math.min(
+    footerMusic.duration || footerMusic.currentTime + 10,
+    footerMusic.currentTime + 10
+  );
+}
+
+if (footerMusic && playButton) {
+  footerMusic.addEventListener('ended', () => {
+    playButton.textContent = '▶';
+  });
+}
+
+    atualizarContador();
+    setInterval(atualizarContador, 1000);
+  </script>
+</body>
+</html>
