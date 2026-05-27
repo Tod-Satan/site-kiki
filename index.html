@@ -666,6 +666,107 @@
   transform: translateY(-2px);
   box-shadow: 0 0 25px rgba(203,183,255,.10);
 }
+@media (max-width: 600px) {
+  .wrap {
+    width: 100%;
+    margin: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .hero {
+    min-height: 100vh;
+    padding: 32px 18px;
+    background-size: cover;
+    background-position: center top;
+  }
+
+  h1 {
+    font-size: clamp(44px, 15vw, 68px);
+    line-height: 1;
+  }
+
+  .countdown {
+    gap: 12px;
+  }
+
+  .time strong {
+    font-size: 42px;
+  }
+
+  .count-sub {
+    font-size: 19px;
+    margin-bottom: 34px;
+  }
+
+  section {
+    padding: 44px 18px;
+  }
+
+  #entrada,
+  #memorias,
+  #sobre,
+  #musicas,
+  .poem-grid,
+  .more-poems {
+    background-size: cover;
+    background-position: center center;
+  }
+
+  #entrada {
+    min-height: 75vh;
+  }
+
+  .password-box {
+    width: 100%;
+    max-width: 92vw;
+    padding: 28px 20px;
+  }
+
+  .title {
+    font-size: 42px;
+  }
+
+  .poem-grid,
+  .more-poems,
+  .cards,
+  .music-list {
+    grid-template-columns: 1fr;
+  }
+
+  .poem-card {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 42px 24px;
+  }
+
+  .poem-text {
+    font-size: 21px;
+  }
+
+  .more-poems::before,
+  .more-poems::after {
+    background-size: 85%;
+    opacity: .28;
+  }
+
+  footer {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-box {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .footer-box.left {
+    padding-left: 76px;
+  }
+
+  .footer-box.right {
+    padding-right: 70px;
+  }
+}
   </style>
 </head>
 <body>
